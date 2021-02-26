@@ -1,6 +1,9 @@
 import React from "react";
+import NavBar from "./NavBar";
+import Loader from "./Loader";
 
 class App extends React.Component {
+  
   state = {
     loading: true,
     caseCount: 19177555,
@@ -16,6 +19,7 @@ class App extends React.Component {
     var secondsBetween = Math.abs(dateDiff) / 1000;
     var vaccinesPerSecond = this.state.dailySevenDayAverage / 86400;
     const caseCount = this.state.caseCount + secondsBetween * vaccinesPerSecond;
+
     this.setState({
       valueToAdd: vaccinesPerSecond,
       caseCount: caseCount,
@@ -50,13 +54,13 @@ class App extends React.Component {
       return (
         <div>
           <h2 className="text-center text-6xl leading-loose md:text-8xl hover:animate-pulse">
-            {Math.round(this.state.caseCount)}
+            {Math.round(this.state.caseCount).toLocaleString()}
           </h2>
           <p className="text-center xs:px-2">
-            People recieved their first dose of Covid-19 vaccine (estimated)
+            People recieved their first dose of Covid-19 vaccine (estimated).
           </p>
           <p className="text-center xs:px-2">
-            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of the UK's population
+            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of the UK's population.
           </p>
           <p className="text-center  xs:px-2">
             <a
@@ -65,16 +69,14 @@ class App extends React.Component {
               rel="noreferrer"
               href="https://coronavirus.data.gov.uk/details/vaccinations"
             >
-              We get our estimate using vaccination data from here
+              We get our estimate using vaccination data from here.
             </a>
           </p>
         </div>
       );
     } else {
       return (
-        <div>
-          <p className="text-center text-8xl">Loading...</p>
-        </div>
+        <Loader />
       );
     }
   }
@@ -83,13 +85,7 @@ class App extends React.Component {
     return (
       <div>
         <header className="w-full mx-auto p-4 md:absolute">
-          <nav>
-            <a href="/">
-              <h1 className="text-center text-4xl font-bold">
-                UK Vaccine Counter
-              </h1>
-            </a>
-          </nav>
+          <NavBar />
         </header>
         <main className="flex h-screen flex-row justify-center items-center flex-grow">
           {this.renderContent()}
