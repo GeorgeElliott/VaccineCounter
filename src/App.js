@@ -11,7 +11,6 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    debugger;
     const ukPopulation = 68122387;
     var dateDiff = new Date().getTime() - this.state.dateUpdated.getTime();
     var secondsBetween = Math.abs(dateDiff) / 1000;
@@ -50,7 +49,7 @@ class App extends React.Component {
     if (!this.state.loading) {
       return (
         <div>
-          <h2 className="text-center text-8xl leading-loose hover:animate-pulse">
+          <h2 className="text-center text-6xl md:text-8xl leading-loose hover:animate-pulse">
             {Math.round(this.state.caseCount)}
           </h2>
           <p className="text-center">
@@ -92,10 +91,10 @@ class App extends React.Component {
             </a>
           </nav>
         </header>
-        <main className=" flex h-screen flex-row  justify-center items-center">
+        <main className=" flex h-screen flex-row justify-center items-center">
           {this.renderContent()}
         </main>
-        <footer className="absolute bottom-0 left-0 w-full mx-auto p-4 flex flex-row justify-center items-center">
+        <footer className="absolute bottom-0 left-0 w-full mx-auto p-4 flex flex-row justify-center items-center text-center">
           Data is from {this.state.dateUpdated.toDateString()} at{" "}
           {this.state.dateUpdated.toTimeString()}
         </footer>
