@@ -49,16 +49,16 @@ class App extends React.Component {
     if (!this.state.loading) {
       return (
         <div>
-          <h2 className="text-center text-6xl md:text-8xl leading-loose hover:animate-pulse">
+          <h2 className="text-center text-6xl leading-loose md:text-8xl hover:animate-pulse">
             {Math.round(this.state.caseCount)}
           </h2>
-          <p className="text-center">
+          <p className="text-center xs:px-2">
             People recieved their first dose of Covid-19 vaccine (estimated)
           </p>
-          <p className="text-center">
+          <p className="text-center xs:px-2">
             That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of the UK's population
           </p>
-          <p className="text-center">
+          <p className="text-center  xs:px-2">
             <a
               className="underline"
               target="_blank"
@@ -81,8 +81,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="bg-gradient-to-tl from-blue-800 to-blue-500 text-white font-mono">
-        <header className="absolute w-full mx-auto p-4 flex flex-row justify-center">
+      <div>
+        <header className="w-full mx-auto p-4 md:absolute">
           <nav>
             <a href="/">
               <h1 className="text-center text-4xl font-bold">
@@ -91,10 +91,10 @@ class App extends React.Component {
             </a>
           </nav>
         </header>
-        <main className=" flex h-screen flex-row justify-center items-center">
+        <main className="flex h-screen flex-row justify-center items-center flex-grow">
           {this.renderContent()}
         </main>
-        <footer className="absolute bottom-0 left-0 w-full mx-auto p-4 flex flex-row justify-center items-center text-center">
+        <footer className="md:absolute md:bottom-0 w-full p-4 mx-auto text-center">
           Data is from {this.state.dateUpdated.toDateString()} at{" "}
           {this.state.dateUpdated.toTimeString()}
         </footer>
