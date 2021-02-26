@@ -54,16 +54,16 @@ class App extends React.Component {
             {Math.round(this.state.caseCount)}
           </h2>
           <p className="text-center">
-            People recieved their first dose of Covid-19 vaccine (Estimated)
+            People recieved their first dose of Covid-19 vaccine (estimated)
           </p>
           <p className="text-center">
-            That is {this.state.percentageOfPopulation.toFixed(2)}% of the UKs
-            population
+            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of the UK's population
           </p>
           <p className="text-center">
             <a
               className="underline"
               target="_blank"
+              rel="noreferrer"
               href="https://coronavirus.data.gov.uk/details/vaccinations"
             >
               We get our estimate using vaccination data from here
