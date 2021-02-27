@@ -12,7 +12,7 @@ class App extends React.Component {
         vaccineCount: 19682048,
         dateUpdated: new Date(2021, 1, 27, 16, 0, 0, 0),
         dailySevenDayAverage: 347800.9,
-        formattedName: "UK",
+        formattedName: "the United Kingdom",
       },
       {
         code: "wal",
@@ -81,18 +81,17 @@ class App extends React.Component {
     if (!this.state.loading) {
       return (
         <div>
-          <h2 className="text-center text-6xl leading-loose md:text-8xl hover:animate-pulse md:pb-12">
+          <h2 className="text-center text-6xl leading-loose md:text-8xl hover:animate-pulse py-12">
             {Math.round(this.state.vaccineCount).toLocaleString()}
           </h2>
-          <p className="text-center xs:px-2">
-            People have received their first dose of Covid-19 vaccine
+          <div className="text-center mx-6 py-2">
+            People in {this.state.activeCountry.formattedName} have received their first dose of Covid-19 vaccine
             (estimated).
-          </p>
-          <p className="text-center xs:px-2">
-            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of
-            the {this.state.activeCountry.formattedName}'s population.
-          </p>
-          <p className="text-center xs:px-2">
+          </div>
+          <div className="text-center mx-6 py-2">
+            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of {this.state.activeCountry.formattedName}'s population.
+          </div>
+          <div className="text-center mx-6 py-2">
             <a
               className="underline"
               target="_blank"
@@ -101,7 +100,7 @@ class App extends React.Component {
             >
               We get our estimate using vaccination data from here.
             </a>
-          </p>
+          </div>
         </div>
       );
     } else {
@@ -115,10 +114,10 @@ class App extends React.Component {
         <header className="w-full mx-auto p-4 md:absolute">
           <NavBar toggleCountry={this.changeActiveCountry} />
         </header>
-        <main className="flex h-screen flex-row justify-center items-center flex-grow">
+        <main className="flex md:h-screen h-full flex-row justify-center items-center flex-grow">
           {this.renderContent()}
         </main>
-        <footer className="md:absolute md:bottom-0 w-full p-4 mx-auto text-center">
+        <footer className="absolute bottom-0 w-full p-4 mx-auto text-center">
           {this.getFormattedTime()}
         </footer>
       </div>
@@ -126,6 +125,9 @@ class App extends React.Component {
   }
 
   setActiveCountry(activeCountry) {
+    this.setState({
+      loading: true
+    });
     var dateDiff = new Date().getTime() - activeCountry.dateUpdated.getTime();
     var secondsBetween = Math.abs(dateDiff) / 1000;
     var vaccinesPerSecond = activeCountry.dailySevenDayAverage / 86400;
