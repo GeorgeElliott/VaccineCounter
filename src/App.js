@@ -3,9 +3,33 @@ import NavBar from "./NavBar";
 import Loader from "./Loader";
 
 class App extends React.Component {
-  
   state = {
     loading: true,
+    uk: {
+      count: 19177555,
+      dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
+      dailySevenDayAverage: 328859,
+    },
+    wales: {
+      count: 19177555,
+      dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
+      dailySevenDayAverage: 328859,
+    },
+    scotland: {
+      count: 19177555,
+      dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
+      dailySevenDayAverage: 328859,
+    },
+    nireland: {
+      count: 19177555,
+      dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
+      dailySevenDayAverage: 328859,
+    },
+    england: {
+      count: 19177555,
+      dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
+      dailySevenDayAverage: 328859,
+    },
     caseCount: 19177555,
     dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
     dailySevenDayAverage: 328859,
@@ -60,9 +84,10 @@ class App extends React.Component {
             People recieved their first dose of Covid-19 vaccine (estimated).
           </p>
           <p className="text-center xs:px-2">
-            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of the UK's population.
+            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of
+            the UK's population.
           </p>
-          <p className="text-center  xs:px-2">
+          <p className="text-center xs:px-2">
             <a
               className="underline"
               target="_blank"
@@ -75,9 +100,7 @@ class App extends React.Component {
         </div>
       );
     } else {
-      return (
-        <Loader />
-      );
+      return <Loader />;
     }
   }
 
