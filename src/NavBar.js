@@ -7,9 +7,9 @@ export default function NavBar(props){
       <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-transparent mb-3">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <a className="md:text-2xl text-lg  font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white">
+            <div className="md:text-2xl text-lg  font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white">
               UK Vaccine Counter
-            </a>
+            </div>
             <button
               className="text-white cursor-pointer bg-blue-700 rounded px-3 py-2 m-1 lg:hidden focus:outline-none"
               type="button"
