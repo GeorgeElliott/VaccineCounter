@@ -5,87 +5,92 @@ import Loader from "./Loader";
 class App extends React.Component {
   state = {
     loading: true,
-    uk: {
-      count: 19177555,
-      dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
-      dailySevenDayAverage: 328859,
-    },
-    wales: {
-      count: 19177555,
-      dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
-      dailySevenDayAverage: 328859,
-    },
-    scotland: {
-      count: 19177555,
-      dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
-      dailySevenDayAverage: 328859,
-    },
-    nireland: {
-      count: 19177555,
-      dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
-      dailySevenDayAverage: 328859,
-    },
-    england: {
-      count: 19177555,
-      dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
-      dailySevenDayAverage: 328859,
-    },
-    caseCount: 19177555,
-    dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
-    dailySevenDayAverage: 328859,
+    countries: [
+      {
+        code: "uk",
+        population: 68123219,
+        vaccineCount: 19682048,
+        dateUpdated: new Date(2021, 1, 27, 16, 0, 0, 0),
+        dailySevenDayAverage: 347800.9,
+        formattedName: "UK",
+      },
+      {
+        code: "wal",
+        population: 3150000,
+        vaccineCount: 916336,
+        dateUpdated: new Date(2021, 1, 27, 16, 0, 0, 0),
+        dailySevenDayAverage: 8198.9,
+        formattedName: "Wales",
+      },
+      {
+        code: "eng",
+        population: 56290000,
+        vaccineCount: 16679881,
+        dateUpdated: new Date(2021, 1, 27, 16, 0, 0, 0),
+        dailySevenDayAverage: 305986.1,
+        formattedName: "England",
+      },
+      {
+        code: "nir",
+        population: 1890000,
+        vaccineCount: 515678,
+        dateUpdated: new Date(2021, 1, 27, 16, 0, 0, 0),
+        dailySevenDayAverage: 10394.4,
+        formattedName: "Northern Ireland",
+      },
+      {
+        code: "scot",
+        population: 5460000,
+        vaccineCount: 1570153,
+        dateUpdated: new Date(2021, 1, 27, 16, 0, 0, 0),
+        dailySevenDayAverage: 22501.4,
+        formattedName: "Scotland",
+      },
+    ],
+    activeCountry: {},
     valueToAdd: null,
     percentageOfPopulation: null,
   };
 
   componentDidMount() {
-    const ukPopulation = 68122387;
-    var dateDiff = new Date().getTime() - this.state.dateUpdated.getTime();
-    var secondsBetween = Math.abs(dateDiff) / 1000;
-    var vaccinesPerSecond = this.state.dailySevenDayAverage / 86400;
-    const caseCount = this.state.caseCount + secondsBetween * vaccinesPerSecond;
-
-    this.setState({
-      valueToAdd: vaccinesPerSecond,
-      caseCount: caseCount,
-      percentageOfPopulation: (caseCount / ukPopulation) * 100,
-      loading: false,
-    });
-
-    this.totalInterval = setInterval(
-      () =>
-        this.setState({
-          caseCount: this.state.caseCount + this.state.valueToAdd,
-        }),
-      1000
-    );
-
-    this.percentInterval = setInterval(
-      () =>
-        this.setState({
-          percentageOfPopulation: (this.state.caseCount / ukPopulation) * 100,
-        }),
-      10000
-    );
+    var activeCountry = this.state.countries.find((x) => x.code === "uk");
+    this.setActiveCountry(activeCountry);
   }
 
   componentWillUnmount() {
+    this.stopIntervals();
+  }
+
+  stopIntervals() {
     clearInterval(this.totalInterval);
     clearInterval(this.percentInterval);
+  }
+
+  getFormattedTime() {
+    if(this.state.activeCountry.dateUpdated){
+      return (
+        <div>{`Government data from ${this.state.activeCountry.dateUpdated.toDateString()} at ${this.state.activeCountry.dateUpdated.toTimeString()}`}</div>
+      );
+    }
+    else {
+      <div></div>
+    }
   }
 
   renderContent() {
     if (!this.state.loading) {
       return (
         <div>
-          <h2 className="text-center text-6xl leading-loose md:text-8xl hover:animate-pulse">
-            {Math.round(this.state.caseCount).toLocaleString()}
+          <h2 className="text-center text-6xl leading-loose md:text-8xl hover:animate-pulse md:pb-12">
+            {Math.round(this.state.vaccineCount).toLocaleString()}
           </h2>
           <p className="text-center xs:px-2">
-            People recieved their first dose of Covid-19 vaccine (estimated).
+            People have received their first dose of Covid-19 vaccine
+            (estimated).
           </p>
           <p className="text-center xs:px-2">
             That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of
-            the UK's population.
+            the {this.state.activeCountry.formattedName}'s population.
           </p>
           <p className="text-center xs:px-2">
             <a
@@ -108,18 +113,55 @@ class App extends React.Component {
     return (
       <div>
         <header className="w-full mx-auto p-4 md:absolute">
-          <NavBar />
+          <NavBar toggleCountry={this.changeActiveCountry} />
         </header>
         <main className="flex h-screen flex-row justify-center items-center flex-grow">
           {this.renderContent()}
         </main>
         <footer className="md:absolute md:bottom-0 w-full p-4 mx-auto text-center">
-          Data is from {this.state.dateUpdated.toDateString()} at{" "}
-          {this.state.dateUpdated.toTimeString()}
+          {this.getFormattedTime()}
         </footer>
       </div>
     );
   }
+
+  setActiveCountry(activeCountry) {
+    var dateDiff = new Date().getTime() - activeCountry.dateUpdated.getTime();
+    var secondsBetween = Math.abs(dateDiff) / 1000;
+    var vaccinesPerSecond = activeCountry.dailySevenDayAverage / 86400;
+    const vaccineCount =
+      activeCountry.vaccineCount + secondsBetween * vaccinesPerSecond;
+
+    this.setState({
+      activeCountry: activeCountry,
+      valueToAdd: vaccinesPerSecond,
+      vaccineCount: vaccineCount,
+      percentageOfPopulation: (vaccineCount / activeCountry.population) * 100,
+      loading: false,
+    });
+
+    this.totalInterval = setInterval(
+      () =>
+        this.setState({
+          vaccineCount: this.state.vaccineCount + this.state.valueToAdd,
+        }),
+      1000
+    );
+
+    this.percentInterval = setInterval(
+      () =>
+        this.setState({
+          percentageOfPopulation:
+            (this.state.vaccineCount / activeCountry.population) * 100,
+        }),
+      10000
+    );
+  }
+
+  changeActiveCountry = (code) => {
+    this.stopIntervals();
+    this.setActiveCountry(this.state.countries.find((x) => x.code === code));
+  };
 }
 
 export default App;
