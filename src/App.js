@@ -6,15 +6,15 @@ class App extends React.Component {
   
   state = {
     loading: true,
-    caseCount: 19177555,
-    dateUpdated: new Date(2021, 1, 26, 16, 0, 0, 0),
-    dailySevenDayAverage: 328859,
+    caseCount: 19682048,
+    dateUpdated: new Date(2021, 1, 27, 16, 0, 0, 0),
+    dailySevenDayAverage: 347800.9,
     valueToAdd: null,
     percentageOfPopulation: null,
   };
 
   componentDidMount() {
-    const ukPopulation = 68122387;
+    const ukPopulation = 68123219;
     var dateDiff = new Date().getTime() - this.state.dateUpdated.getTime();
     var secondsBetween = Math.abs(dateDiff) / 1000;
     var vaccinesPerSecond = this.state.dailySevenDayAverage / 86400;
@@ -53,11 +53,11 @@ class App extends React.Component {
     if (!this.state.loading) {
       return (
         <div>
-          <h2 className="text-center text-6xl leading-loose md:text-8xl hover:animate-pulse">
+          <h2 className="text-center text-6xl leading-loose md:text-8xl hover:animate-pulse md:pb-12">
             {Math.round(this.state.caseCount).toLocaleString()}
           </h2>
           <p className="text-center xs:px-2">
-            People recieved their first dose of Covid-19 vaccine (estimated).
+            People have received their first dose of Covid-19 vaccine (estimated).
           </p>
           <p className="text-center xs:px-2">
             That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of the UK's population.
