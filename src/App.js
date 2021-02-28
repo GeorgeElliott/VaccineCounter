@@ -13,6 +13,8 @@ class App extends React.Component {
         dateUpdated: new Date(2021, 1, 27, 16, 0, 0, 0),
         dailySevenDayAverage: 347800.9,
         formattedName: "the United Kingdom",
+        minUpdateInterval: 4000,
+        maxUpdateInterval: 6020,
       },
       {
         code: "wal",
@@ -21,6 +23,7 @@ class App extends React.Component {
         dateUpdated: new Date(2021, 1, 27, 16, 0, 0, 0),
         dailySevenDayAverage: 8198.9,
         formattedName: "Wales",
+
       },
       {
         code: "eng",
@@ -29,6 +32,8 @@ class App extends React.Component {
         dateUpdated: new Date(2021, 1, 27, 16, 0, 0, 0),
         dailySevenDayAverage: 305986.1,
         formattedName: "England",
+        minUpdateInterval: 3000,
+        maxUpdateInterval: 4700,
       },
       {
         code: "nir",
@@ -67,13 +72,12 @@ class App extends React.Component {
   }
 
   getFormattedTime() {
-    if(this.state.activeCountry.dateUpdated){
+    if (this.state.activeCountry.dateUpdated) {
       return (
         <div>{`Government data from ${this.state.activeCountry.dateUpdated.toDateString()} at ${this.state.activeCountry.dateUpdated.toTimeString()}`}</div>
       );
-    }
-    else {
-      <div></div>
+    } else {
+      <div></div>;
     }
   }
 
@@ -82,14 +86,15 @@ class App extends React.Component {
       return (
         <div>
           <h2 className="text-center text-6xl leading-loose md:text-8xl hover:animate-pulse py-12">
-            {Math.round(this.state.vaccineCount).toLocaleString()}
+            {Math.floor(this.state.vaccineCount)}
           </h2>
           <div className="text-center mx-6 py-2">
-            People in {this.state.activeCountry.formattedName} have received their first dose of Covid-19 vaccine
-            (estimated).
+            People in {this.state.activeCountry.formattedName} have received
+            their first dose of Covid-19 vaccine (estimated).
           </div>
           <div className="text-center mx-6 py-2">
-            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of {this.state.activeCountry.formattedName}'s population.
+            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of{" "}
+            {this.state.activeCountry.formattedName}'s population.
           </div>
           <div className="text-center mx-6 py-2">
             <a
@@ -126,7 +131,7 @@ class App extends React.Component {
 
   setActiveCountry(activeCountry) {
     this.setState({
-      loading: true
+      loading: true,
     });
     var dateDiff = new Date().getTime() - activeCountry.dateUpdated.getTime();
     var secondsBetween = Math.abs(dateDiff) / 1000;
@@ -142,12 +147,29 @@ class App extends React.Component {
       loading: false,
     });
 
+    var interval = activeCountry.code === "uk" || activeCountry.code === "eng" ?
+      Math.floor(Math.random() * (activeCountry.maxUpdateInterval - activeCountry.minUpdateInterval)) + activeCountry.minUpdateInterval :
+      1000;
+
     this.totalInterval = setInterval(
-      () =>
-        this.setState({
-          vaccineCount: this.state.vaccineCount + this.state.valueToAdd,
-        }),
-      1000
+      () => {
+        interval = Math.floor(Math.random() * (activeCountry.maxUpdateInterval - activeCountry.minUpdateInterval)) + activeCountry.minUpdateInterval;
+        if(vaccinesPerSecond > 3){
+          var now = new Date();
+          var future = new Date(now.getTime() + interval);
+          let dateDiff = future.getTime() - now.getTime();
+          var secondsBetween = Math.abs(dateDiff) / 1000;
+          this.animateValue(this.state.vaccineCount, this.state.vaccineCount + secondsBetween * vaccinesPerSecond, 500);
+        }
+        else
+        {
+          interval = 1000;
+          this.setState({
+            vaccineCount: this.state.vaccineCount + this.state.valueToAdd,
+          });
+        }
+      },
+      interval
     );
 
     this.percentInterval = setInterval(
@@ -164,6 +186,21 @@ class App extends React.Component {
     this.stopIntervals();
     this.setActiveCountry(this.state.countries.find((x) => x.code === code));
   };
+
+  animateValue(start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      this.setState({
+        vaccineCount: Math.floor(progress * (end - start) + start),
+      });
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
 }
 
 export default App;
