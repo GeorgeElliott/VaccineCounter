@@ -25,7 +25,7 @@ export default function NavBar(props){
             }
             id="example-navbar-danger"
           >
-            <div className="flex flex-row flex-wrap lg:ml-auto">
+            <div className="flex flex-row-reverse flex-wrap lg:ml-auto">
               <button
                 className="bg-blue-700 rounded px-3 py-2 m-1"
                 onClick={() => props.toggleCountry("uk")}
