@@ -147,12 +147,13 @@ class App extends React.Component {
       loading: false,
     });
 
-    var interval = Math.floor(Math.random() * (activeCountry.maxUpdateInterval - activeCountry.minUpdateInterval)) + activeCountry.minUpdateInterval;
+    var interval = activeCountry.code === "uk" || activeCountry.code === "eng" ?
+      Math.floor(Math.random() * (activeCountry.maxUpdateInterval - activeCountry.minUpdateInterval)) + activeCountry.minUpdateInterval :
+      1000;
 
     this.totalInterval = setInterval(
       () => {
         interval = Math.floor(Math.random() * (activeCountry.maxUpdateInterval - activeCountry.minUpdateInterval)) + activeCountry.minUpdateInterval;
-        console.log({vaccinesPerSecond, interval})
         if(vaccinesPerSecond > 3){
           var now = new Date();
           var future = new Date(now.getTime() + interval);
