@@ -122,7 +122,7 @@ class App extends React.Component {
         <main className="flex md:h-screen h-full flex-row justify-center items-center flex-grow">
           {this.renderContent()}
         </main>
-        <footer className="md:absolute relative bottom-0 w-full p-4 mx-auto text-center">
+        <footer className="md:absolute relative bottom-0 w-full p-4 sm:pt-10 sm:pb-4 sm:px-4 mx-auto text-center">
           {this.getFormattedTime()}
         </footer>
       </div>
