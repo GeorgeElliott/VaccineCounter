@@ -85,8 +85,8 @@ class App extends React.Component {
     if (!this.state.loading) {
       return (
         <div>
-          <h2 className="text-center text-6xl leading-loose md:text-8xl hover:animate-pulse py-12">
-            {Math.floor(this.state.vaccineCount)}
+          <h2 className="text-center text-6xl leading-loose md:text-8xl py-12">
+            {Math.floor(this.state.vaccineCount).toLocaleString()}
           </h2>
           <div className="text-center mx-6 py-2">
             People in {this.state.activeCountry.formattedName} have received
@@ -122,7 +122,7 @@ class App extends React.Component {
         <main className="flex md:h-screen h-full flex-row justify-center items-center flex-grow">
           {this.renderContent()}
         </main>
-        <footer className="absolute bottom-0 w-full p-4 mx-auto text-center">
+        <footer className="md:absolute relative bottom-0 w-full p-4 mx-auto text-center">
           {this.getFormattedTime()}
         </footer>
       </div>
