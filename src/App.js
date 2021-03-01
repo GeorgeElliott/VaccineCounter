@@ -9,7 +9,7 @@ class App extends React.Component {
       {
         code: "uk",
         population: 68123219,
-        vaccineCount: 2027551,
+        vaccineCount: 2227551,
         dateUpdated: new Date(2021, 2, 1, 16, 0, 0, 0),
         dailySevenDayAverage: 364515.9,
         formattedName: "the United Kingdom",
