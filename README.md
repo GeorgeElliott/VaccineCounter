@@ -1,4 +1,4 @@
-# UK Vaccine Counter
+# Vaccine Counter
 ## [View the site here](https://amazing-villani-d72493.netlify.app/)
 ## Why
 I have been doing a react course and I wanted to take some of what I have learnt and put it to use. Covid-19 vaccinations have been going on at an impressive rate around the world and I thought that this would be a fun way to show the pace that vaccications are happening in the U.K.
