@@ -109,7 +109,7 @@ class App extends React.Component {
             of the Covid-19 vaccine (estimated).
           </div>
           <div className="text-center text-sm mx-6 py-2">
-            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of{" "}
+            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of {" "}
             {this.state.activeCountry.formattedName}'s population.
           </div>
         </div>
