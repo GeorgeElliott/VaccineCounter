@@ -1,7 +1,35 @@
-import React from 'react';
+import React from "react";
 
-export default function NavBar(props){
+export default function NavBar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const [fullDoseToggle, setFullDoseToggled] = React.useState(false);
+
+  const updateToggle = () => {
+    props.toggleFullDose(!fullDoseToggle);
+    setFullDoseToggled(!fullDoseToggle);
+  };
+
+  const renderButtons= () => {
+    return (
+      <>
+        {props.countries.map((x) => {
+          return (
+            <button
+            key={x.code}
+              className={`rounded px-3 py-2 m-1 ${
+                props.activeCountry !== x.code
+                  ? "bg-blue-700"
+                  : "bg-blue-800 border border-white shadow-lg"
+              }`} onClick={() => props.toggleCountry(x.code)}
+            >
+              {x.buttonText}
+            </button>
+          );
+        })}
+      </>
+    );
+  };
+
   return (
     <>
       <nav className="relative flex flex-wrap items-center justify-between navbar-expand-lg bg-transparent mb-3">
@@ -15,7 +43,7 @@ export default function NavBar(props){
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              Filters 
+              Filters
             </button>
           </div>
           <div
@@ -26,35 +54,16 @@ export default function NavBar(props){
             id="example-navbar-danger"
           >
             <div className="flex flex-row-reverse flex-wrap lg:ml-auto">
+              {renderButtons()}
               <button
-                className="bg-blue-700 rounded px-3 py-2 m-1"
-                onClick={() => props.toggleCountry("uk")}
+                className={`rounded px-3 py-2 m-1 ${
+                  !fullDoseToggle
+                    ? "bg-blue-700"
+                    : "bg-blue-800 border border-white shadow-lg"
+                }`}
+                onClick={(e) => updateToggle()}
               >
-                UK
-              </button>
-              <button
-                className="bg-blue-700 rounded px-3 py-2 m-1"
-                onClick={() => props.toggleCountry("eng")}
-              >
-                England
-              </button>
-              <button
-                className="bg-blue-700 rounded px-3 py-2 m-1"
-                onClick={() => props.toggleCountry("scot")}
-              >
-                Scotland
-              </button>
-              <button
-                className="bg-blue-700 rounded px-3 py-2 m-1"
-                onClick={() => props.toggleCountry("wal")}
-              >
-                Wales
-              </button>
-              <button
-                className="bg-blue-700 rounded px-3 py-2 m-1"
-                onClick={() => props.toggleCountry("nir")}
-              >
-                N.Ireland
+                Full Dose
               </button>
             </div>
           </div>
@@ -63,4 +72,3 @@ export default function NavBar(props){
     </>
   );
 }
-
