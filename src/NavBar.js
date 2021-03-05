@@ -9,18 +9,19 @@ export default function NavBar(props) {
     setFullDoseToggled(!fullDoseToggle);
   };
 
-  const renderButtons= () => {
+  const renderButtons = () => {
     return (
       <>
         {props.countries.map((x) => {
           return (
             <button
-            key={x.code}
-              className={`rounded px-3 py-2 m-1 ${
+              key={x.code}
+              className={`rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg ${
                 props.activeCountry !== x.code
-                  ? "bg-blue-700"
-                  : "bg-blue-800 border border-white shadow-lg"
-              }`} onClick={() => props.toggleCountry(x.code)}
+                  ? "bg-blue-700 border-blue-800"
+                  : "bg-blue-800 border-blue-900"
+              }`}
+              onClick={() => props.toggleCountry(x.code)}
             >
               {x.buttonText}
             </button>
@@ -39,7 +40,11 @@ export default function NavBar(props) {
               UK Vaccine Counter
             </div>
             <button
-              className="text-white cursor-pointer bg-blue-700 rounded px-3 py-2 m-1 lg:hidden focus:outline-none"
+              className={`rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg lg:hidden ${
+                !navbarOpen
+                  ? "bg-blue-700 border-blue-800"
+                  : "bg-blue-800 border-blue-900"
+              }`}
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
@@ -56,10 +61,10 @@ export default function NavBar(props) {
             <div className="flex flex-row-reverse flex-wrap lg:ml-auto">
               {renderButtons()}
               <button
-                className={`rounded px-3 py-2 m-1 ${
+                className={`rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg ${
                   !fullDoseToggle
-                    ? "bg-blue-700"
-                    : "bg-blue-800 border border-white shadow-lg"
+                    ? "bg-blue-700 border-blue-800"
+                    : "bg-blue-800 border-blue-900"
                 }`}
                 onClick={(e) => updateToggle()}
               >
