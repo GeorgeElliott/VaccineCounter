@@ -86,7 +86,7 @@ class App extends React.Component {
   getFormattedTime() {
     if (this.state.activeCountry && this.state.activeCountry.dateUpdated) {
       return (
-        <div>{`Government data from ${this.state.activeCountry.dateUpdated.toDateString()} at ${this.state.activeCountry.dateUpdated.toTimeString()}`}</div>
+        <div>{`Based on data published at ${this.state.activeCountry.dateUpdated.toLocaleString()}`}</div>
       );
     } else {
       <div></div>;
@@ -97,20 +97,23 @@ class App extends React.Component {
     if (!this.state.loading) {
       return (
         <div className="relative">
-          <Modal formattedTime={this.getFormattedTime}/>
+          <Modal formattedTime={this.getFormattedTime} />
           <h2 className="text-center text-6xl leading-loose md:text-8xl py-12">
             {Math.floor(this.state.vaccineCount).toLocaleString()}
           </h2>
-          <div className="text-center text-sm mx-6 py-2">
+          <div className="text-center  md:text-lg text-sm mx-6 py-2">
             People in {this.state.activeCountry.formattedName} have received{" "}
             {!this.state.fullDoseToggled
               ? "their first dose"
               : "all required doses"}
             of the Covid-19 vaccine (estimated).
           </div>
-          <div className="text-center text-sm mx-6 py-2">
-            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of {" "}
+          <div className="text-center md:text-lg text-sm mx-6 py-2">
+            That is roughly {this.state.percentageOfPopulation.toFixed(2)}% of{" "}
             {this.state.activeCountry.formattedName}'s population.
+          </div>
+          <div className="text-center text-xs mx-6 py-2">
+            {this.getFormattedTime()}
           </div>
         </div>
       );
@@ -135,9 +138,6 @@ class App extends React.Component {
         <main className="flex md:h-screen h-full flex-row justify-center items-center flex-grow">
           {this.renderContent()}
         </main>
-        <footer className="md:absolute bottom-0 w-full p-4 md:pt-10 mx-auto text-center">
-          {this.getFormattedTime()}
-        </footer>
       </div>
     );
   }
@@ -193,6 +193,7 @@ class App extends React.Component {
     this.setState({
       fullDoseToggled: isToggled,
     });
+    this.stopIntervals();
     this.setActiveCountry(this.state.activeCountry, isToggled);
   };
 }
