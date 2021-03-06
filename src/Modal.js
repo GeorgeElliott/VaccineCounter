@@ -1,14 +1,31 @@
 import React from "react";
+import ReactTooltip from "react-tooltip";
 
 export default function Modal(props) {
   const [showModal, setShowModal] = React.useState(false);
 
   return (
     <div className="sm:relative">
+      <ReactTooltip backgroundColor="#1d4ed8" />
       <div
         className="absolute md:top-2 md:right-2 top-2 right-7 cursor-pointer hover:animate-pulse"
+        data-tip="More info"
         onClick={() => setShowModal(true)}
       >
+        <svg
+          className="animate-bounce w-5 h-5 "
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+          />
+        </svg>
         <svg
           className="w-5 h-5 fill-current"
           xmlns="http://www.w3.org/2000/svg"
@@ -39,8 +56,7 @@ export default function Modal(props) {
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
-                  >
-                  </button>
+                  ></button>
                 </div>
                 {/*body*/}
                 <div className="relative px-6 py-3 flex-auto my-4 text-gray-600  leading-relaxed">
