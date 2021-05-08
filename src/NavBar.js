@@ -97,7 +97,7 @@ export default function NavBar(props) {
                 </svg>
               </a>
               <button
-                data-tip="Dark Mode"
+                data-tip="Toggle Dark Mode"
                 className={`rounded px-3 py-2 m-1 border-b-4 border-l-2 ${
                   !isDark()
                     ? "bg-blue-700 border-blue-800"
