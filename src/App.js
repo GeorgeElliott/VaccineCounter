@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "./NavBar";
 import Loader from "./Loader";
 import Modal from "./Modal";
+import {ThemeProvider} from "./themings/themeContext"
 
 class App extends React.Component {
   state = {
@@ -61,7 +62,7 @@ class App extends React.Component {
         dailySevenDayAverageFullDose: 11183.9,
         formattedName: "Wales",
         buttonText: "Wales",
-      }
+      },
     ],
     activeCountry: {},
     valueToAdd: null,
@@ -124,21 +125,23 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <header className="w-full mx-auto p-4 md:absolute">
-          <NavBar
-            countries={this.state.countries}
-            activeCountry={
-              this.state.activeCountry ? this.state.activeCountry.code : "uk"
-            }
-            toggleCountry={this.changeActiveCountry}
-            toggleFullDose={this.toggleFullDose}
-          />
-        </header>
-        <main className="flex md:h-screen h-full flex-row justify-center items-center flex-grow">
-          {this.renderContent()}
-        </main>
-      </div>
+      <ThemeProvider>
+        <div>
+          <header className="w-full mx-auto p-4 md:absolute">
+            <NavBar
+              countries={this.state.countries}
+              activeCountry={
+                this.state.activeCountry ? this.state.activeCountry.code : "uk"
+              }
+              toggleCountry={this.changeActiveCountry}
+              toggleFullDose={this.toggleFullDose}
+            />
+          </header>
+          <main className="flex md:h-screen h-full flex-row justify-center items-center flex-grow">
+            {this.renderContent()}
+          </main>
+        </div>
+      </ThemeProvider>
     );
   }
 
