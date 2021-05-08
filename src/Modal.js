@@ -6,7 +6,7 @@ export default function Modal(props) {
 
   return (
     <div className="sm:relative">
-      <ReactTooltip backgroundColor="#1d4ed8" />
+      <ReactTooltip className="bg-tooltip" />
       <div
         className="absolute md:top-2 md:right-2 top-2 right-7 cursor-pointer hover:animate-pulse"
         data-tip="More info"
